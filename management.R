@@ -230,10 +230,27 @@ congress.bd.108 <- fromJSON(file="0615.json", unexpected.escape = "error")
 
 library(RJSONIO)
 
-practice <- lapply(congress.bd.31[[1]],function(x) c(congress.bd.31[[1]]$id,congress.bd.31[[1]]$description,congress.bd.31[[1]]$secondarySource[[1]]$name,congress.bd.31[[1]]$secondarySource[[1]]$party,congress.bd.31[[1]]$secondarySource[[1]]$gender))
+practice <- lapply(congress.bd.31[[1]]$id,function(x) c(congress.bd.31[[1]]$description,congress.bd.31[[1]]$secondarySource[[1]]$name,congress.bd.31[[1]]$secondarySource[[1]]$party,congress.bd.31[[1]]$secondarySource[[1]]$gender))
 
 practice <- do.call(rbind,practice)
 
 print(practice)
 
 # getting pretty close
+
+# but maybe all we're interested in is the bill and the name? let's squeeze in party affiliation
+
+practice <- lapply(congress.bd.31[[1]]$id,function(x) c(congress.bd.31[[1]]$description,congress.bd.31[[1]]$secondarySource[[1]]$name,congress.bd.31[[1]]$secondarySource[[1]]$party))
+
+practice <- do.call(rbind,practice)
+
+practice2 <- lapply(congress.bd.31[[2]]$id,function(x) c(congress.bd.31[[2]]$description,congress.bd.31[[2]]$secondarySource[[1]]$name,congress.bd.31[[2]]$secondarySource[[1]]$party))
+
+practice2 <- do.call(rbind,practice2)
+
+practice.m <- list(practice,practice2)
+
+do.call(rbind,practice.m)
+
+#SUCCESS
+
